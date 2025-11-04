@@ -35,7 +35,6 @@ const Navbar: React.FC = () => {
 
   const navItems = [
     { path: '/problems', label: 'Problems' },
-    { path: '/top', label: 'Discuss' },
     { path: '/contest', label: 'Contest' },
     { path: '/game', label: 'Game' },
     { path: '/interview', label: 'Interview' },
@@ -71,7 +70,7 @@ const Navbar: React.FC = () => {
             <span className={`text-xl font-bold ${
               isDark ? 'text-white' : 'text-gray-900'
             }`}>
-              CodeThrone
+              AlgoClash
             </span>
           </Link>
 
@@ -269,7 +268,7 @@ const Navbar: React.FC = () => {
                 >
                   <Code className="h-8 w-8 text-blue-600" />
                   <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    CodeThrone
+                    AlgoClash
                   </span>
                 </Link>
                 <button
