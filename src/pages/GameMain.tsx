@@ -64,23 +64,6 @@ const GameMain: React.FC = () => {
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {isDark ? (
         <div className="absolute inset-0">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={`bg-dark-${i}`}
-              className="absolute animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 5}s`
-              }}
-            >
-              <div className={`w-1 h-1 rounded-full ${
-                i % 3 === 0 ? 'bg-blue-400' :
-                i % 3 === 1 ? 'bg-red-400' : 'bg-purple-400'
-              } opacity-60`}></div>
-            </div>
-          ))}
         </div>
       ) : (
         <div className="absolute inset-0">
