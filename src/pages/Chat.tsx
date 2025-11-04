@@ -128,6 +128,10 @@ const Chat: React.FC = () => {
   const [isSendingMessage, setIsSendingMessage] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const activeRoomRef = useRef(activeRoom);
+  useEffect(() => {
+    activeRoomRef.current = activeRoom;
+  }, [activeRoom]);
   const messageInputRef = useRef<HTMLTextAreaElement>(null)
   const emojiPickerRef = useRef<HTMLDivElement>(null)
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
@@ -218,12 +222,15 @@ const Chat: React.FC = () => {
     })
 
     // Chat event listeners
-    newSocket.on("newMessage", (message: Message) => {
-      // console.log("📨 New message received:", message)
-      if (activeRoom && message.room === activeRoom._id) {
-        setMessages((prev) => [...prev, message])
-      }
-    })
+// ✅ AFTER (Uses the always-current `activeRoomRef`)
+newSocket.on("newMessage", (message: Message) => {
+  // console.log("📨 New message received:", message)
+  
+  // This check now uses the ref, which is never stale
+  if (activeRoomRef.current && message.room === activeRoomRef.current._id) {
+    setMessages((prev) => [...prev, message])
+  }
+})
 
     newSocket.on("userTyping", ({ user: typingUser, roomId, isTyping: typing }) => {
       setIsTyping((prev) => {
@@ -262,7 +269,7 @@ const Chat: React.FC = () => {
     })
 
     return newSocket
-  }, [token, user, activeRoom, reconnectAttempts])
+  }, [token, user, reconnectAttempts])
 
   // Reconnection logic
   const attemptReconnection = useCallback(() => {

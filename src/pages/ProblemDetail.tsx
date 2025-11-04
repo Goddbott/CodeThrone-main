@@ -1223,42 +1223,6 @@ const ProblemDetail: React.FC = () => {
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <button
-                  onClick={handleRun}
-                  disabled={running || !token}
-                  className="flex items-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-                  title={!token ? "Please login to run code" : ""}
-                >
-                  {running ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
-                      Running...
-                    </>
-                  ) : (
-                    <>
-                      <Play className="h-4 w-4 mr-2" />
-                      Run
-                    </>
-                  )}
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  disabled={submitting || !token}
-                  className="flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                  title={!token ? "Please login to submit code" : ""}
-                >
-                  {submitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4 mr-2" />
-                      Submit
-                    </>
-                  )}
-                </button>
                 <select
                   value={language}
                   onChange={(e) => handleLanguageChange(e.target.value)}
@@ -2463,7 +2427,8 @@ const ProblemDetail: React.FC = () => {
                 </select>
               </div>
               
-              {/* Right side container with relative positioning for dropdown */}
+              {/* Correct Wala - Right side container with relative positioning for dropdown */}
+            
               <div className="flex items-center space-x-3 relative">
                 {/* Run and Submit Buttons */}
                 <button
@@ -2673,35 +2638,6 @@ const ProblemDetail: React.FC = () => {
 
           {/* Floating Buttons Container */}
           <div className="fixed bottom-4 md:bottom-8 right-4 md:right-8 z-40 flex flex-col space-y-2 md:space-y-4">
-            {/* DSA Visualizer Learning Button */}
-            <button
-              onClick={handleDsaVisualizerClick}
-              className="p-3 md:p-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500 focus:ring-opacity-75 animate-bounce-slow"
-              title="DSA Visualizer Learning"
-              style={{ width: '78px', height: '78px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
-              <GraduationCap className="h-8 md:h-10 w-8 md:w-10" />
-            </button>
-
-            {/* Analyse Time and Space Complexity Button */}
-            <button
-              onClick={toggleComplexityAiMaximized}
-              className="p-3 md:p-4 bg-orange-600 hover:bg-orange-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-opacity-75 animate-bounce-slow"
-              title="Analyse Time and Space Complexity of Current Code"
-              style={{ width: '78px', height: '78px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
-              <Zap className="h-8 md:h-10 w-8 md:w-10" />
-            </button>
-
-            {/* Existing Floating AI Chat Button */}
-            <button
-              onClick={toggleAiMaximized}
-              className="p-3 md:p-4 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-75 animate-bounce-slow"
-              title="Open AI Chat"
-              style={{ width: '78px', height: '78px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
-              <Bot className="h-8 md:h-10 w-8 md:w-10" />
-            </button>
           </div>
         </div>
       </div>
