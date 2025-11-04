@@ -8,61 +8,18 @@ import { User, Github, Linkedin, Trophy, Code, TrendingUp, Award, Star, Target, 
 import { API_URL, SOCKET_URL } from "../config/api";
 import SubmissionCalendar from '../components/SubmissionCalendar';
 import { showError, showSuccess } from '../utils/toast';
-// Animated Counter Component
-const AnimatedCounter: React.FC<{ end: number; duration?: number; prefix?: string; suffix?: string }> = ({ 
+
+// Animated Counter Component (Animation Removed)
+const AnimatedCounter: React.FC<{ end: number; prefix?: string; suffix?: string }> = ({ 
   end, 
-  duration = 2000, 
   prefix = '', 
   suffix = '' 
 }) => {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [isVisible]);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    let startTime: number;
-    let animationId: number;
-
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      
-      // Easing function for smooth animation
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(easeOut * end));
-
-      if (progress < 1) {
-        animationId = requestAnimationFrame(animate);
-      }
-    };
-
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [end, duration, isVisible]);
-
-  return <span ref={ref}>{prefix}{count}{suffix}</span>;
+  // Directly render the end value without animation
+  return <span>{prefix}{end}{suffix}</span>;
 };
 
-// Progress Circle Component
+// Progress Circle Component (Animation Removed)
 const ProgressCircle: React.FC<{ 
   percentage: number; 
   size?: number; 
@@ -102,7 +59,7 @@ const ProgressCircle: React.FC<{
           strokeDasharray={circumference}
           strokeDashoffset={offset}
           strokeLinecap="round"
-          className="transition-all duration-1000 ease-out"
+          className="" // Removed transition class
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center flex-col">
@@ -117,7 +74,7 @@ const ProgressCircle: React.FC<{
   );
 };
 
-// Mini Chart Component for activity
+// Mini Chart Component for activity (Animation Removed)
 const ActivityChart: React.FC<{ data: number[] }> = ({ data }) => {
   const maxValue = Math.max(...data, 1);
   
@@ -126,18 +83,16 @@ const ActivityChart: React.FC<{ data: number[] }> = ({ data }) => {
       {data.map((value, index) => (
         <div
           key={index}
-          className="bg-gradient-to-t from-blue-500 to-blue-400 rounded-t transition-all duration-1000 ease-out"
+          className="bg-gradient-to-t from-blue-500 to-blue-400 rounded-t"
           style={{
             height: `${(value / maxValue) * 100}%`,
             width: '8px',
-            animationDelay: `${index * 100}ms`
-          }}
+          }} // Removed animationDelay
         />
       ))}
     </div>
   );
 };
-// import { Card, CardHeader, CardContent, CardTitle } from '../components/Card'; // Adjust path if needed
 
 export const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
   <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 ${className}`}>{children}</div>
@@ -438,7 +393,7 @@ const Profile: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">Loading profile...</p>
         </div>
       </div>
@@ -456,7 +411,7 @@ const Profile: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-300 mb-4">{error || 'The user you\'re looking for doesn\'t exist.'}</p>
           <button 
             onClick={fetchProfile}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
           >
             Try Again
           </button>
@@ -468,143 +423,13 @@ const Profile: React.FC = () => {
   const isOwnProfile = user?.username === profile.username;
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 relative ${
+    <div className={`min-h-screen relative ${
       isDark
         ? "bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900"
         : "bg-gradient-to-br from-gray-50 via-white to-gray-100"
     }`}>
-      {/* Light Mode AI Animation */}
-      {!isDark && (
-        <>
-          <style>{`
-            @keyframes light-ai-float {
-              0%, 100% {
-                transform: translateY(0px) translateX(0px) rotate(0deg);
-                opacity: 0.5;
-              }
-              25% {
-                transform: translateY(-10px) translateX(12px) rotate(90deg);
-                opacity: 0.8;
-              }
-              50% {
-                transform: translateY(6px) translateX(-8px) rotate(180deg);
-                opacity: 1;
-              }
-              75% {
-                transform: translateY(-15px) translateX(18px) rotate(270deg);
-                opacity: 0.6;
-              }
-            }
-            @keyframes light-data-particle {
-              0% { transform: translateY(-30px) translateX(0px) rotate(0deg); opacity: 0; }
-              10% { opacity: 0.6; }
-              90% { opacity: 0.6; }
-              100% { transform: translateY(100vh) translateX(20px) rotate(360deg); opacity: 0; }
-            }
-            @keyframes ai-aurora {
-              0%, 100% { 
-                background: linear-gradient(45deg, rgba(59, 130, 246, 0.12), rgba(147, 51, 234, 0.12));
-                transform: scale(1) rotate(0deg);
-              }
-              33% { 
-                background: linear-gradient(45deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.12));
-                transform: scale(1.05) rotate(120deg);
-              }
-              66% { 
-                background: linear-gradient(45deg, rgba(139, 92, 246, 0.12), rgba(16, 185, 129, 0.12));
-                transform: scale(0.95) rotate(240deg);
-              }
-            }
-            @keyframes light-neural-glow {
-              0%, 100% { 
-                box-shadow: 0 0 10px rgba(59, 130, 246, 0.3), 0 0 20px rgba(147, 51, 234, 0.2);
-                opacity: 0.5; 
-              }
-              50% { 
-                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(147, 51, 234, 0.4);
-                opacity: 1; 
-              }
-            }
-            .light-ai-float {
-              animation: light-ai-float 6s ease-in-out infinite;
-            }
-            .light-data-particle {
-              animation: light-data-particle 8s linear infinite;
-            }
-            .ai-aurora {
-              animation: ai-aurora 11s ease-in-out infinite;
-            }
-            .light-neural-glow {
-              animation: light-neural-glow 2.8s ease-in-out infinite;
-            }
-          `}</style>
-          
-          <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-            {/* AI Aurora backgrounds */}
-            <div className="absolute top-1/5 left-1/3 w-96 h-96 ai-aurora rounded-full blur-3xl"></div>
-            <div className="absolute bottom-1/4 right-1/5 w-80 h-80 ai-aurora rounded-full blur-3xl" style={{ animationDelay: '4s' }}></div>
-            <div className="absolute top-2/3 left-1/6 w-64 h-64 ai-aurora rounded-full blur-2xl" style={{ animationDelay: '8s' }}></div>
-            
-            {/* Light Neural Network Nodes */}
-            {Array.from({ length: 25 }).map((_, i) => (
-              <div
-                key={`light-neural-${i}`}
-                className={`light-neural-glow absolute ${
-                  i % 6 === 0 ? 'w-2 h-2 bg-blue-400/60 rounded-full' :
-                  i % 6 === 1 ? 'w-1.5 h-1.5 bg-purple-400/60 rounded-full' :
-                  i % 6 === 2 ? 'w-2 h-2 bg-cyan-400/60 rounded-full' :
-                  i % 6 === 3 ? 'w-1 h-1 bg-green-400/60 rounded-full' :
-                  i % 6 === 4 ? 'w-1.5 h-1.5 bg-teal-400/60 rounded-full' :
-                  'w-2 h-2 bg-indigo-400/60 rounded-full'
-                }`}
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 2.8}s`,
-                  animationDuration: `${2.8 + Math.random() * 1.5}s`,
-                }}
-              />
-            ))}
-            
-            {/* Light Data Particles */}
-            {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                key={`light-data-${i}`}
-                className={`light-data-particle absolute w-1 h-1 ${
-                  i % 5 === 0 ? 'bg-blue-300/50' :
-                  i % 5 === 1 ? 'bg-purple-300/50' :
-                  i % 5 === 2 ? 'bg-cyan-300/50' :
-                  i % 5 === 3 ? 'bg-green-300/50' : 'bg-teal-300/50'
-                } rounded-full`}
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 8}s`,
-                  animationDuration: `${8 + Math.random() * 3}s`,
-                }}
-              />
-            ))}
-
-            {/* Light AI Float Elements */}
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={`light-ai-${i}`}
-                className={`light-ai-float absolute ${
-                  i % 4 === 0 ? 'w-3 h-3 bg-gradient-to-br from-blue-200/50 to-purple-200/50' :
-                  i % 4 === 1 ? 'w-2.5 h-2.5 bg-gradient-to-br from-cyan-200/50 to-teal-200/50' :
-                  i % 4 === 2 ? 'w-3 h-3 bg-gradient-to-br from-green-200/50 to-blue-200/50' :
-                  'w-2.5 h-2.5 bg-gradient-to-br from-indigo-200/50 to-violet-200/50'
-                } rounded-full blur-sm`}
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDuration: `${6 + Math.random() * 2}s`,
-                  animationDelay: `${Math.random() * 6}s`,
-                }}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      
+      {/* All background animation <style> and <div> blocks have been removed */}
       
       <div className="relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -633,7 +458,7 @@ const Profile: React.FC = () => {
                   {isOwnProfile && (
                     <button
                       type="button"
-                      className="absolute bottom-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors shadow-lg focus:outline-none border-2 border-white dark:border-gray-800"
+                      className="absolute bottom-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center shadow-lg focus:outline-none border-2 border-white dark:border-gray-800"
                       onClick={() => setShowAvatarModal(true)}
                       title="Change avatar"
                     >
@@ -663,7 +488,7 @@ const Profile: React.FC = () => {
                           ].map((url, idx) => (
                             <button
                               key={url}
-                              className={`focus:outline-none border-2 rounded-full w-16 h-16 p-1 transition-all duration-150 ${profile.profile.avatar === url ? 'border-blue-500 ring-2 ring-blue-400' : 'border-gray-300 dark:border-gray-600 hover:border-blue-400'}`}
+                              className={`focus:outline-none border-2 rounded-full w-16 h-16 p-1 ${profile.profile.avatar === url ? 'border-blue-500 ring-2 ring-blue-400' : 'border-gray-300 dark:border-gray-600'}`}
                               onClick={async () => {
                                 setImageUploading(true);
                                 try {
@@ -692,7 +517,7 @@ const Profile: React.FC = () => {
                           ))}
                         </div>
                         <button
-                          className="w-full mt-2 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"
+                          className="w-full mt-2 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold"
                           onClick={() => setShowAvatarModal(false)}
                           disabled={imageUploading}
                         >Cancel</button>
@@ -716,7 +541,7 @@ const Profile: React.FC = () => {
                 <div className="mb-6">
                   <button
                     onClick={() => setIsEditing(!isEditing)}
-                    className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+                    className="w-full bg-blue-600 text-white py-2 rounded-md"
                   >
                     {isEditing ? 'Cancel' : 'Edit Profile'}
                   </button>
@@ -796,10 +621,10 @@ const Profile: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isUpdating}
-                    className={`w-full py-2 rounded-md transition-colors ${
+                    className={`w-full py-2 rounded-md ${
                       isUpdating 
                         ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-green-600 hover:bg-green-700'
+                        : 'bg-green-600'
                     } text-white`}
                   >
                     {isUpdating ? 'Saving...' : 'Save Changes'}
@@ -812,7 +637,7 @@ const Profile: React.FC = () => {
                       href={profile.profile.linkedIn}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                      className="flex items-center text-blue-600"
                     >
                       <Linkedin className="h-5 w-5 mr-2" />
                       LinkedIn Profile
@@ -823,7 +648,7 @@ const Profile: React.FC = () => {
                       href={profile.profile.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-gray-800 hover:text-gray-600 transition-colors"
+                      className="flex items-center text-gray-800"
                     >
                       <Github className="h-5 w-5 mr-2" />
                       GitHub Profile
@@ -895,7 +720,7 @@ const Profile: React.FC = () => {
                     </h4>
                     <button
                       onClick={() => navigate('/contest/leaderboard')}
-                      className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 font-medium hover:underline transition-colors"
+                      className="text-sm text-purple-600 dark:text-purple-400 font-medium hover:underline"
                     >
                       View All
                     </button>
@@ -903,7 +728,7 @@ const Profile: React.FC = () => {
                   {leaderboard.topContest.map((user, idx) => (
                     <button
                       key={user._id}
-                      className="w-full flex items-center px-4 py-3 mb-2 rounded-xl border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-500 transition-all duration-200 cursor-pointer group shadow-sm hover:shadow-md"
+                      className="w-full flex items-center px-4 py-3 mb-2 rounded-xl border border-gray-200 dark:border-gray-600 cursor-pointer group shadow-sm"
                       onClick={() => navigate(`/profile/${user.username}`)}
                     >
                       <div className="flex items-center gap-3 flex-1">
@@ -916,7 +741,7 @@ const Profile: React.FC = () => {
                         `}>
                           {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
                         </div>
-                        <span className="font-medium text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+                        <span className="font-medium text-gray-900 dark:text-white">
                           {user.username}
                         </span>
                       </div>
@@ -937,7 +762,7 @@ const Profile: React.FC = () => {
                     </h4>
                     <button
                       onClick={() => navigate('/game/leaderboard')}
-                      className="text-sm text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200 font-medium hover:underline transition-colors"
+                      className="text-sm text-green-600 dark:text-green-400 font-medium hover:underline"
                     >
                       View All
                     </button>
@@ -945,7 +770,7 @@ const Profile: React.FC = () => {
                   {leaderboard.topGame.map((user, idx) => (
                     <button
                       key={user._id}
-                      className="w-full flex items-center px-4 py-3 mb-2 rounded-xl border border-gray-200 dark:border-gray-600 hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-300 dark:hover:border-green-500 transition-all duration-200 cursor-pointer group shadow-sm hover:shadow-md"
+                      className="w-full flex items-center px-4 py-3 mb-2 rounded-xl border border-gray-200 dark:border-gray-600 cursor-pointer group shadow-sm"
                       onClick={() => navigate(`/profile/${user.username}`)}
                     >
                       <div className="flex items-center gap-3 flex-1">
@@ -958,7 +783,7 @@ const Profile: React.FC = () => {
                         `}>
                           {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
                         </div>
-                        <span className="font-medium text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors">
+                        <span className="font-medium text-gray-900 dark:text-white">
                           {user.username}
                         </span>
                       </div>
@@ -982,7 +807,7 @@ const Profile: React.FC = () => {
                   </h4>
                   <button
                     onClick={() => navigate('/rapidfire/leaderboard')}
-                    className="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 font-medium hover:underline transition-colors"
+                    className="text-sm text-red-600 dark:text-red-400 font-medium hover:underline"
                   >
                     View All
                   </button>
@@ -992,7 +817,7 @@ const Profile: React.FC = () => {
                     <button
                       key={user._id}
                       onClick={() => navigate(`/profile/${user.username}`)}
-                      className="w-full flex items-center justify-between p-2 bg-white/60 dark:bg-gray-800/40 rounded-lg hover:bg-white/80 dark:hover:bg-gray-700/60 transition-all duration-200 group hover:shadow-sm border border-red-200/30 dark:border-red-600/20"
+                      className="w-full flex items-center justify-between p-2 bg-white/60 dark:bg-gray-800/40 rounded-lg group border border-red-200/30 dark:border-red-600/20"
                     >
                       <div className="flex items-center gap-3 flex-1">
                         <div className={`
@@ -1004,7 +829,7 @@ const Profile: React.FC = () => {
                         `}>
                           {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
                         </div>
-                        <span className="font-medium text-gray-900 dark:text-white group-hover:text-red-700 dark:group-hover:text-red-300 transition-colors">
+                        <span className="font-medium text-gray-900 dark:text-white">
                           {user.username}
                         </span>
                       </div>
@@ -1040,7 +865,7 @@ const Profile: React.FC = () => {
               {/* Main Stats Grid with Animations */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {/* Problems Solved Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-green-200 dark:bg-green-800/40 rounded-lg">
@@ -1088,7 +913,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Accuracy Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
@@ -1122,7 +947,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Rapid Fire Rating Card */}
-                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-xl shadow-lg p-6 border border-purple-200 dark:border-purple-800 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-xl shadow-lg p-6 border border-purple-200 dark:border-purple-800">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-lg shadow-lg">
@@ -1152,7 +977,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Recent Activity */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
@@ -1182,7 +1007,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Contest Rating Detailed */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
@@ -1220,7 +1045,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 {/* Game Rating Detailed */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
@@ -1301,7 +1126,7 @@ const Profile: React.FC = () => {
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div 
-                          className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                          className="bg-blue-600 h-2 rounded-full"
                           style={{ width: `${(topic.solved / topic.total) * 100}%` }}
                         ></div>
                       </div>
@@ -1320,7 +1145,7 @@ const Profile: React.FC = () => {
                     .filter((p): p is NonNullable<typeof p> => p != null)
                     .slice(0, 10)
                     .map((problem, index) => (
-                      <div key={index} className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                      <div key={index} className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg">
                         <div className="flex items-center">
                           <CheckCircle className="h-4 w-4 text-green-600 mr-3" />
                           <span className="font-medium text-gray-900">{problem.title}</span>
