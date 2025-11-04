@@ -82,46 +82,12 @@ const AnimatedBackground = memo(() => {
       {isDark ? (
         /* Dark theme rapid-fire animation */
         <div className="rapid-fire-dark">
-          {Array.from({ length: 40 }).map((_, i) => (
-            <div
-              key={`rapid-dark-${i}`}
-              className="absolute animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `rapid-pulse ${1 + Math.random() * 2}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 3}s`
-              }}
-            >
-              <div className={`w-1 h-1 rounded-full ${
-                i % 4 === 0 ? 'bg-red-400' :
-                i % 4 === 1 ? 'bg-yellow-400' :
-                i % 4 === 2 ? 'bg-green-400' : 'bg-blue-400'
-              } opacity-70`}></div>
-            </div>
-          ))}
+
         </div>
       ) : (
         /* Light theme rapid-fire animation */
         <div className="rapid-fire-light">
-          {Array.from({ length: 30 }).map((_, i) => (
-            <div
-              key={`rapid-light-${i}`}
-              className="absolute"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `rapid-float ${2 + Math.random() * 3}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 4}s`
-              }}
-            >
-              <div className={`w-2 h-2 rounded-full ${
-                i % 4 === 0 ? 'bg-red-200' :
-                i % 4 === 1 ? 'bg-yellow-200' :
-                i % 4 === 2 ? 'bg-green-200' : 'bg-blue-200'
-              } opacity-50`}></div>
-            </div>
-          ))}
+
         </div>
       )}
     </div>
