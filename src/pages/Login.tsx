@@ -206,12 +206,12 @@ const Login: React.FC = () => {
           <div className="flex justify-center mb-6">
             <div className="flex items-center space-x-2">
               <Code className="h-8 w-8 text-orange-500" />
-              <span className="text-2xl font-bold text-gray-900 dark:text-white">CodeThrone</span>
+              <span className="text-2xl font-bold text-gray-900 dark:text-white">AlgoClash</span>
             </div>
           </div>
           
           <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white mb-8">
-            Sign in to CodeThrone
+            Sign in to AlgoClash
           </h2>
           
           <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm py-8 px-6 shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700">
@@ -355,7 +355,7 @@ const Login: React.FC = () => {
                   <div className="w-full border-t border-gray-300 dark:border-gray-700" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white/90 dark:bg-gray-800/90 text-gray-500 dark:text-gray-300 backdrop-blur-sm">New to CodeThrone?</span>
+                  <span className="px-2 bg-white/90 dark:bg-gray-800/90 text-gray-500 dark:text-gray-300 backdrop-blur-sm">New to AlgoClash?</span>
                 </div>
               </div>
 

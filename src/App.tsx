@@ -61,7 +61,7 @@ const AppRoutes = () => {
           <div className="animate-spin rounded-full h-32 w-32 border-4 border-t-transparent border-orange-600 mx-auto"></div>
           <Trophy className="text-orange-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" size={40} />
         </div>
-        <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Loading <span className="text-orange-600">CodeThrone</span>...</h2>
+        <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Loading <span className="text-orange-600">AlgoClash</span>...</h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">This will take 15 seconds</p>
         <p className="italic text-sm text-gray-600 dark:text-gray-300 transition-all duration-500">{tips[tipIndex]}</p>
       </div>
