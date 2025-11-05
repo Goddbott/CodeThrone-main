@@ -1,7 +1,7 @@
-# CodeThrone - Professional Documentation
+# AlgoClash - Professional Documentation
 
 ## Overview
-CodeThrone is a full-stack competitive programming and learning platform designed for coders to practice, compete, and collaborate. It features a modern UI, real-time chat, AI-powered interview practice, and a rich set of coding tools. The application is built with React (frontend), Node.js/Express (backend), and integrates with various services for code execution, authentication, and data management.
+AlgoClash is a full-stack competitive programming and learning platform designed for coders to practice, compete, and collaborate. It features a modern UI, real-time chat, AI-powered interview practice, and a rich set of coding tools. The application is built with React (frontend), Node.js/Express (backend), and integrates with various services for code execution, authentication, and data management.
 
 ---
 
