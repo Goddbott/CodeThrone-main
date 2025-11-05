@@ -1,6 +1,6 @@
-# CodeThrone - Your Coder Army
+# AlgoClash - Your Coder Army
 
-Welcome to **CodeThrone**, a comprehensive platform designed to enhance coding, collaboration, and learning through interactive contests, discussions, and real-time chat features. This project is built with modern web technologies and follows best practices for scalability, maintainability, and user experience.
+Welcome to **AlgoClash**, a comprehensive platform designed to enhance coding, collaboration, and learning through interactive contests, discussions, and real-time chat features. This project is built with modern web technologies and follows best practices for scalability, maintainability, and user experience.
 
 ---
 
@@ -20,7 +20,7 @@ Welcome to **CodeThrone**, a comprehensive platform designed to enhance coding, 
 ---
 
 ## Overview
-**CodeThrone** is a full-stack web application that brings together competitive programming, collaborative problem-solving, and social interaction. Users can participate in coding contests, discuss solutions, chat in real-time, and track their progress. The platform is ideal for students, professionals, and coding enthusiasts looking to improve their skills and connect with others.
+**AlgoClash** is a full-stack web application that brings together competitive programming, collaborative problem-solving, and social interaction. Users can participate in coding contests, discuss solutions, chat in real-time, and track their progress. The platform is ideal for students, professionals, and coding enthusiasts looking to improve their skills and connect with others.
 
 ---
 
@@ -71,8 +71,8 @@ root/
 ## Setup & Installation
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/CodingEnthusiastic/CodeThrone.git
-   cd CodeThrone
+   git clone https://github.com/Goddbott/AlgoClash.git
+   cd AlgoClash
    ```
 2. **Install Dependencies:**
    - Backend:
